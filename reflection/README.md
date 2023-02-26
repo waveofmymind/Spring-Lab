@@ -7,3 +7,26 @@
 
 > @Controller 애노테이션이 붙은 클래스 모두 출력하기
 
+## 기록
+
+- Reflections reflections = new Reflections("org.example");
+        
+        -> org.example 내에 있는 클래스 탐색
+        
+- reflections.getTypesAnnotatedWith(Controller.class) 
+
+        -> 해당 애노테이션이 붙은 대상 찾기
+        
+### 힙 영역에 있는 클래스 객체 꺼내오는 방법
+
+```
+//1
+Class<User> clazz = User.class;
+
+//2
+User user = new User("waveofmymind","전상준");
+Class<? extends User> clazz2 = user.getClass();
+
+//3
+Class<?> clazz3 = Class.forName("org.example.User");
+```
