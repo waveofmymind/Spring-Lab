@@ -22,9 +22,11 @@
 ```
 //1
 Class<User> clazz = User.class;
+
 //2
 User user = new User("waveofmymind","전상준");
 Class<? extends User> clazz2 = user.getClass();
+
 //3
 Class<?> clazz3 = Class.forName("org.example.User");
 ```
