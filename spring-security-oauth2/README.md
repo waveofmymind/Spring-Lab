@@ -7,3 +7,17 @@
 
 - AccessToken을 백에서 얻지 않는 이유는, CORS가 발생하기도 하고, 프론트와 백을 분리할 경우, 백에서는 AccessToken으로 정보를 얻어오는 역할만 한다.
 
+
+
+## SecurityConfig에서 정적 리소스 무시하기
+
+```
+@Bean
+public WebSecurityCustomizer webSecurityCustomizer() {
+  
+    return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations()));
+}
+```
+
+## UserDetailService
+
