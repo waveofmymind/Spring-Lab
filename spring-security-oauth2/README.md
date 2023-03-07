@@ -9,15 +9,27 @@
 
 
 
-## SecurityConfig에서 정적 리소스 무시하기
+## SecurityContextHolder로 부터 유저이름 빼오기
+
+```
+Optional.ofNullable(SecurityContextHolder.getContext())
+        .map(SecurityContext::getAuthentication)
+        .filter(Authentication::isAuthenticated) //인증 되었는지?
+        .map(Authentication::getPrincipal)
+        .map(BoardPrincipal.class::cast) //Principal의 구현체
+        .map(BoardPrincipal::getUsername);
+
+```
+## UserDetailsService
 
 ```
 @Bean
-public WebSecurityCustomizer webSecurityCustomizer() {
-  
-    return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations()));
-}
-```
-
-## UserDetailService
+public UserDetailsService userDetailsService(String username) {
+        return username -> userAccountRepository
+                    .findById(username)
+                    .map(UserAccountDto::from)
+                    .map(BoardPrincipal::from)
+                    .orElseThrow(() -> new UsernameNotFoundException); //인증 유저가 아닐때 터지는 예외
+                    }
+                    ```
 
